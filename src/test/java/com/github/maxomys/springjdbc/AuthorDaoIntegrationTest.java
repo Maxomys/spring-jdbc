@@ -10,8 +10,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.test.context.ActiveProfiles;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 @ActiveProfiles("local")
 @DataJpaTest
@@ -48,6 +47,29 @@ public class AuthorDaoIntegrationTest {
 
         assertNotNull(savedAuthor);
         assertEquals("Hamilton", savedAuthor.getLastName());
+    }
+
+    @Test
+    void testUpdateAuthor() {
+        Author newAuthor = new Author("John", "Original");
+
+        Author savedAuthor = authorDao.saveNewAuthor(newAuthor);
+        savedAuthor.setLastName("Updated");
+
+        Author updatedAuthor = authorDao.updateAuthor(savedAuthor);
+
+        assertEquals("Updated", updatedAuthor.getLastName());
+    }
+
+    @Test
+    void testDeleteAuthor() {
+        Author author = new Author("Jane", "Doe");
+
+        Author savedAuthor = authorDao.saveNewAuthor(author);
+
+        authorDao.deleteAuthorById(savedAuthor.getId());
+
+        assertNull(authorDao.getById(savedAuthor.getId()));
     }
 
 }
