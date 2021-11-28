@@ -42,7 +42,6 @@ public class BookDaoIntegrationTest {
         String title = "My Book 3";
 
         Book newBook = new Book(title, null, null);
-        newBook.setAuthorId(1L);
 
         Book savedBook = bookDao.saveNewBook(newBook);
 
@@ -53,7 +52,6 @@ public class BookDaoIntegrationTest {
     @Test
     void testUpdateBook() {
         Book newBook = new Book("My Book Original", null, null);
-        newBook.setAuthorId(1L);
 
         Book savedBook = bookDao.saveNewBook(newBook);
         savedBook.setTitle("My Book Updated");
@@ -66,7 +64,6 @@ public class BookDaoIntegrationTest {
     @Test
     void testDeleteBook() {
         Book newBook = new Book("My Book 3", null, null);
-        newBook.setAuthorId(1L);
 
         Book savedBook = bookDao.saveNewBook(newBook);
 

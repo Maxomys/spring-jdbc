@@ -1,6 +1,5 @@
 package com.github.maxomys.springjdbc.dao;
 
-import com.github.maxomys.springjdbc.domain.Author;
 import com.github.maxomys.springjdbc.domain.Book;
 import org.springframework.stereotype.Component;
 
@@ -12,8 +11,11 @@ public class BookDaoImpl implements BookDao {
 
     private final DataSource source;
 
-    public BookDaoImpl(DataSource source) {
+    private final AuthorDao authorDao;
+
+    public BookDaoImpl(DataSource source, AuthorDao authorDao) {
         this.source = source;
+        this.authorDao = authorDao;
     }
 
     @Override
@@ -57,7 +59,11 @@ public class BookDaoImpl implements BookDao {
             statement.setString(1, book.getIsbn());
             statement.setString(2, book.getPublisher());
             statement.setString(3, book.getTitle());
-            statement.setLong(4, book.getAuthorId());
+            if (book.getAuthor() != null) {
+                statement.setLong(4, book.getAuthor().getId());
+            } else {
+                statement.setNull(4, Types.BIGINT);
+            }
 
             statement.executeUpdate();
 
@@ -84,7 +90,11 @@ public class BookDaoImpl implements BookDao {
             statement.setString(1, book.getIsbn());
             statement.setString(2, book.getPublisher());
             statement.setString(3, book.getTitle());
-            statement.setLong(4, book.getAuthorId());
+            if (book.getAuthor() != null) {
+                statement.setLong(4, book.getAuthor().getId());
+            } else {
+                statement.setNull(4, Types.BIGINT);
+            }
             statement.setLong(5, book.getId());
 
             statement.executeUpdate();
@@ -119,7 +129,9 @@ public class BookDaoImpl implements BookDao {
                 book.setIsbn(resultSet.getString("isbn"));
                 book.setPublisher(resultSet.getString("publisher"));
                 book.setTitle(resultSet.getString("title"));
-                book.setAuthorId(resultSet.getLong("author_id"));
+                if (resultSet.getLong("author_id") != 0) {
+                    book.setAuthor(authorDao.getById(resultSet.getLong("author_id")));
+                }
 
                 return book;
             }
