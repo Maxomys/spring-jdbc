@@ -1,12 +1,14 @@
 package com.github.maxomys.springjdbc.dao;
 
 import com.github.maxomys.springjdbc.domain.Author;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
 
 import javax.sql.DataSource;
 import java.sql.*;
 
-@Component
+@Component("jdbc")
+@Primary
 public class AuthorDaoImpl implements AuthorDao {
 
     private final DataSource source;

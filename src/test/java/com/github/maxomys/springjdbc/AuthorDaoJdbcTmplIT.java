@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.test.context.ActiveProfiles;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -17,9 +18,10 @@ import static org.junit.jupiter.api.Assertions.*;
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @ComponentScan(basePackages = {"com.github.maxomys.springjdbc.dao"})
-public class AuthorDaoIntegrationTest {
+public class AuthorDaoJdbcTmplIT {
 
     @Autowired
+    @Qualifier("jdbcTmpl")
     AuthorDao authorDao;
 
     @Test
@@ -70,7 +72,7 @@ public class AuthorDaoIntegrationTest {
 
         authorDao.deleteAuthorById(savedAuthor.getId());
 
-        assertNull(authorDao.getById(savedAuthor.getId()));
+        assertThrows(EmptyResultDataAccessException.class, () -> authorDao.getById(savedAuthor.getId()));
     }
 
 }
