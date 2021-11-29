@@ -1,9 +1,7 @@
 package com.github.maxomys.springjdbc.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -16,6 +14,9 @@ public class Author {
     private String firstName;
     private String lastName;
 
+    @Transient
+    private List<Book> books;
+
     public Author() {
 
     }
@@ -23,6 +24,12 @@ public class Author {
     public Author(String firstName, String lastName) {
         this.firstName = firstName;
         this.lastName = lastName;
+    }
+
+    public Author(String firstName, String lastName, List<Book> books) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.books = books;
     }
 
     public Long getId() {
@@ -47,6 +54,14 @@ public class Author {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public List<Book> getBooks() {
+        return books;
+    }
+
+    public void setBooks(List<Book> books) {
+        this.books = books;
     }
 
     @Override

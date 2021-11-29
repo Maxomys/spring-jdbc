@@ -1,12 +1,14 @@
 package com.github.maxomys.springjdbc.dao;
 
 import com.github.maxomys.springjdbc.domain.Book;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
 
 import javax.sql.DataSource;
 import java.sql.*;
 
 @Component
+@Primary
 public class BookDaoImpl implements BookDao {
 
     private final DataSource source;

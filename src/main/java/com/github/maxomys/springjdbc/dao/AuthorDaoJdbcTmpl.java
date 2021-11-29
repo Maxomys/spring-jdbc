@@ -5,7 +5,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
 
-@Component("jdbcTmpl")
+@Component("authorDaoJdbcTmpl")
 public class AuthorDaoJdbcTmpl implements AuthorDao {
 
     private final JdbcTemplate jdbcTemplate;
@@ -16,7 +16,12 @@ public class AuthorDaoJdbcTmpl implements AuthorDao {
 
     @Override
     public Author getById(Long id) {
-        return jdbcTemplate.queryForObject("SELECT * FROM author WHERE id = ?", getRowMapper(), id);
+        String sql = "SELECT author.id AS id, first_name, last_name, book.id AS book_id, book.title, book.isbn, book.publisher\n" +
+                    "\tFROM author LEFT JOIN book ON author.id = book.author_id WHERE author.id = ?";
+
+        return jdbcTemplate.query(sql, new AuthorExtractor(), id);
+
+        //return jdbcTemplate.queryForObject("SELECT * FROM author WHERE id = ?", getRowMapper(), id);
     }
 
     @Override

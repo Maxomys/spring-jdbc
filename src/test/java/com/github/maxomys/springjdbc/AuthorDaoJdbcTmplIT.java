@@ -21,7 +21,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class AuthorDaoJdbcTmplIT {
 
     @Autowired
-    @Qualifier("jdbcTmpl")
+    @Qualifier("authorDaoJdbcTmpl")
     AuthorDao authorDao;
 
     @Test
