@@ -4,9 +4,11 @@ import com.github.maxomys.springjdbc.dao.BookDao;
 import com.github.maxomys.springjdbc.domain.Book;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.test.context.ActiveProfiles;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -15,9 +17,10 @@ import static org.junit.jupiter.api.Assertions.*;
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @ComponentScan(basePackages = {"com.github.maxomys.springjdbc.dao"})
-public class BookDaoIntegrationTest {
+class BookDaoHibernateImplTest {
 
     @Autowired
+    @Qualifier("bookDaoHibernate")
     BookDao bookDao;
 
     @Test
@@ -70,6 +73,7 @@ public class BookDaoIntegrationTest {
         bookDao.deleteBookById(savedBook.getId());
 
         assertNull(bookDao.getById(savedBook.getId()));
+        //assertThrows(EmptyResultDataAccessException.class, () -> bookDao.getById(savedBook.getId()));
     }
 
 }

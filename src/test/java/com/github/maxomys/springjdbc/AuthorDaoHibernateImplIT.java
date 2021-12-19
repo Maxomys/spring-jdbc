@@ -17,9 +17,10 @@ import static org.junit.jupiter.api.Assertions.*;
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @ComponentScan(basePackages = {"com.github.maxomys.springjdbc.dao"})
-public class AuthorDaoIntegrationTest {
+class AuthorDaoHibernateImplIT {
 
     @Autowired
+    @Qualifier("authorDaoHibernate")
     AuthorDao authorDao;
 
     @Test
@@ -47,6 +48,7 @@ public class AuthorDaoIntegrationTest {
         Author savedAuthor = authorDao.saveNewAuthor(newAuthor);
 
         assertNotNull(savedAuthor);
+        assertNotNull(savedAuthor.getId());
         assertEquals("Hamilton", savedAuthor.getLastName());
     }
 

@@ -12,7 +12,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @ActiveProfiles("local")
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-public class MySQLIntegrationTest {
+public class MySQLIT {
 
     @Autowired
     BookRepository bookRepository;

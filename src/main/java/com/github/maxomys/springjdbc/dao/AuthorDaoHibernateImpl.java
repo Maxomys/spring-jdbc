@@ -7,7 +7,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.TypedQuery;
 
-@Component
+@Component("authorDaoHibernate")
 public class AuthorDaoHibernateImpl implements AuthorDao {
 
     private final EntityManagerFactory emf;
@@ -33,17 +33,37 @@ public class AuthorDaoHibernateImpl implements AuthorDao {
 
     @Override
     public Author saveNewAuthor(Author author) {
-        return null;
+        EntityManager em = getEntityManager();
+
+        em.getTransaction().begin();
+        em.persist(author);
+        em.flush();
+        em.getTransaction().commit();
+
+        return getById(author.getId());
     }
 
     @Override
     public Author updateAuthor(Author author) {
-        return null;
+        EntityManager em = getEntityManager();
+
+        em.getTransaction().begin();
+        em.merge(author);
+        em.flush();
+        em.getTransaction().commit();
+
+        return getById(author.getId());
     }
 
     @Override
     public void deleteAuthorById(Long id) {
+        EntityManager em = getEntityManager();
 
+        em.getTransaction().begin();
+        Author author = em.find(Author.class, id);
+        em.remove(author);
+        em.flush();
+        em.getTransaction().commit();
     }
 
     private EntityManager getEntityManager() {
