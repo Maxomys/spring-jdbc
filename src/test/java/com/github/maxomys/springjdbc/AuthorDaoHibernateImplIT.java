@@ -10,6 +10,8 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.test.context.ActiveProfiles;
 
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -40,6 +42,14 @@ class AuthorDaoHibernateImplIT {
         assertNotNull(author);
         assertEquals(firstName, author.getFirstName());
         assertEquals(lastName, author.getLastName());
+    }
+
+    @Test
+    void listAuthorByLastNameLike() {
+        List<Author> authors = authorDao.listAuthorByLastNameLike("Wall");
+
+        assertNotNull(authors);
+        assertTrue(authors.size() > 0);
     }
 
     @Test

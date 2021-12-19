@@ -53,6 +53,11 @@ public class BookDaoImpl implements BookDao {
     }
 
     @Override
+    public Book findByISBN(String isbn) {
+        return null;
+    }
+
+    @Override
     public Book saveNewBook(Book book) {
         try (Connection connection = source.getConnection();
              PreparedStatement statement = connection.prepareStatement(

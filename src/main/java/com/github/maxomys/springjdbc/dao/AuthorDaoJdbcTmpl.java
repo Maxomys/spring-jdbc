@@ -5,6 +5,8 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Component("authorDaoJdbcTmpl")
 public class AuthorDaoJdbcTmpl implements AuthorDao {
 
@@ -28,6 +30,11 @@ public class AuthorDaoJdbcTmpl implements AuthorDao {
     public Author findAuthorByName(String firstName, String lastName) {
         return jdbcTemplate.queryForObject("SELECT * FROM author WHERE first_name = ? AND last_name = ?",
                                                 getRowMapper(), firstName, lastName);
+    }
+
+    @Override
+    public List<Author> listAuthorByLastNameLike(String lastname) {
+        return null;
     }
 
     @Override

@@ -2,6 +2,7 @@ package com.github.maxomys.springjdbc;
 
 import com.github.maxomys.springjdbc.dao.BookDao;
 import com.github.maxomys.springjdbc.domain.Book;
+import net.bytebuddy.utility.RandomString;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -38,6 +39,16 @@ class BookDaoHibernateImplTest {
 
         assertNotNull(book);
         assertEquals(title, book.getTitle());
+    }
+
+    @Test
+    void findByISBN() {
+        Book book = new Book("BookISBN", "9782123456803", "Znak");
+
+        Book savedBook = bookDao.saveNewBook(book);
+
+        Book fetchedBook = bookDao.findByISBN(book.getIsbn());
+        assertEquals(book.getIsbn(), fetchedBook.getIsbn());
     }
 
     @Test

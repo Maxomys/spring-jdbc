@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 
 import javax.sql.DataSource;
 import java.sql.*;
+import java.util.List;
 
 @Component
 @Primary
@@ -47,6 +48,11 @@ public class AuthorDaoImpl implements AuthorDao {
             e.printStackTrace();
         }
 
+        return null;
+    }
+
+    @Override
+    public List<Author> listAuthorByLastNameLike(String lastname) {
         return null;
     }
 

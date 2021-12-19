@@ -25,6 +25,11 @@ public class BookDaoJdbcTmpl implements BookDao {
     }
 
     @Override
+    public Book findByISBN(String isbn) {
+        return null;
+    }
+
+    @Override
     public Book saveNewBook(Book book) {
         if (book.getAuthor() != null) {
             jdbcTemplate.update("INSERT INTO book (isbn, publisher, title, author_id) VALUES (?, ?, ?, ?)",

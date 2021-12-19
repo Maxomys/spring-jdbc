@@ -8,6 +8,8 @@ public interface BookDao {
 
     Book findBookByTitle(String title);
 
+    Book findByISBN(String isbn);
+
     Book saveNewBook(Book book);
 
     Book updateBook(Book book);
