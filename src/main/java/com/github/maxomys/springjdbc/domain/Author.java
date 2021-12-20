@@ -5,6 +5,10 @@ import java.util.List;
 import java.util.Objects;
 
 @Entity
+@NamedQueries({
+        @NamedQuery(name = "author_find_all", query = "FROM Author"),
+        @NamedQuery(name = "find_by_name", query = "FROM Author a WHERE a.firstName = :first_name AND a.lastName = :last_name")
+})
 public class Author {
 
     @Id

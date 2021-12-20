@@ -38,6 +38,11 @@ public class AuthorDaoJdbcTmpl implements AuthorDao {
     }
 
     @Override
+    public List<Author> findAllAuthors() {
+        return null;
+    }
+
+    @Override
     public Author saveNewAuthor(Author author) {
         jdbcTemplate.update("INSERT INTO author (first_name, last_name) VALUES (?, ?)",
                                 author.getFirstName(), author.getLastName());

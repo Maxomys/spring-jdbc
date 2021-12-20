@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.TypedQuery;
+import java.util.List;
 
 @Component("bookDaoHibernate")
 public class BookDaoHibernateImpl implements BookDao {
@@ -14,6 +15,18 @@ public class BookDaoHibernateImpl implements BookDao {
 
     public BookDaoHibernateImpl(EntityManagerFactory emf) {
         this.emf = emf;
+    }
+
+    @Override
+    public List<Book> findAllBooks() {
+        EntityManager em = getEntityManager();
+
+        try {
+            TypedQuery<Book> query = em.createNamedQuery("find_all_books", Book.class);
+            return query.getResultList();
+        } finally {
+            em.close();
+        }
     }
 
     @Override

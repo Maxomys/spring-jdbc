@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 
 import javax.sql.DataSource;
 import java.sql.*;
+import java.util.List;
 
 @Component
 @Primary
@@ -18,6 +19,11 @@ public class BookDaoImpl implements BookDao {
     public BookDaoImpl(DataSource source, AuthorDao authorDao) {
         this.source = source;
         this.authorDao = authorDao;
+    }
+
+    @Override
+    public List<Book> findAllBooks() {
+        return null;
     }
 
     @Override

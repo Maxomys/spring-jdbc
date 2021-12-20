@@ -3,6 +3,7 @@ package com.github.maxomys.springjdbc;
 import com.github.maxomys.springjdbc.dao.BookDao;
 import com.github.maxomys.springjdbc.domain.Book;
 import net.bytebuddy.utility.RandomString;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -12,17 +13,28 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.test.context.ActiveProfiles;
 
+import java.util.List;
+import java.util.Random;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 @ActiveProfiles("local")
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @ComponentScan(basePackages = {"com.github.maxomys.springjdbc.dao"})
-class BookDaoHibernateImplTest {
+class BookDaoHibernateImplIT {
 
     @Autowired
     @Qualifier("bookDaoHibernate")
     BookDao bookDao;
+
+    @Test
+    void findAllBooks() {
+        List<Book> books = bookDao.findAllBooks();
+
+        assertNotNull(books);
+        assertTrue(books.size() > 0);
+    }
 
     @Test
     void testGetBook() {
@@ -43,7 +55,8 @@ class BookDaoHibernateImplTest {
 
     @Test
     void findByISBN() {
-        Book book = new Book("BookISBN", "9782123456803", "Znak");
+        Random random = new Random();
+        Book book = new Book("BookISBN", Integer.toString(random.nextInt(3000 - 1000) + 1000), "Znak");
 
         Book savedBook = bookDao.saveNewBook(book);
 

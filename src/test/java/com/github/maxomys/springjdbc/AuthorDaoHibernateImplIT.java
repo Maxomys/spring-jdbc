@@ -53,6 +53,14 @@ class AuthorDaoHibernateImplIT {
     }
 
     @Test
+    void testGetAllAuthors() {
+        List<Author> authors = authorDao.findAllAuthors();
+
+        assertNotNull(authors);
+        assertTrue(authors.size() > 0);
+    }
+
+    @Test
     void testSaveNewAuthor() {
         Author newAuthor = new Author("Peter", "Hamilton");
         Author savedAuthor = authorDao.saveNewAuthor(newAuthor);

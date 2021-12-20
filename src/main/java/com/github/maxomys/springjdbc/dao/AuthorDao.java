@@ -12,6 +12,8 @@ public interface AuthorDao {
 
     List<Author> listAuthorByLastNameLike(String lastname);
 
+    List<Author> findAllAuthors();
+
     Author saveNewAuthor(Author author);
 
     Author updateAuthor(Author author);

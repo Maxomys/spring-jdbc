@@ -25,8 +25,10 @@ public class AuthorDaoHibernateImpl implements AuthorDao {
 
     @Override
     public Author findAuthorByName(String firstName, String lastName) {
-        TypedQuery<Author> query = getEntityManager().createQuery("SELECT a FROM Author a " +
-                "WHERE a.firstName = :first_name AND a.lastName = :last_name", Author.class);
+        //TypedQuery<Author> query = getEntityManager().createQuery("SELECT a FROM Author a " +
+        //        "WHERE a.firstName = :first_name AND a.lastName = :last_name", Author.class);
+
+        TypedQuery<Author> query = getEntityManager().createNamedQuery("find_by_name", Author.class);
         query.setParameter("first_name", firstName);
         query.setParameter("last_name", lastName);
 
@@ -42,6 +44,18 @@ public class AuthorDaoHibernateImpl implements AuthorDao {
             query.setParameter("last_name", lastname + "%");
             List<Author> authors = query.getResultList();
             return authors;
+        } finally {
+            em.close();
+        }
+    }
+
+    @Override
+    public List<Author> findAllAuthors() {
+        EntityManager em = getEntityManager();
+
+        try {
+            TypedQuery<Author> query = em.createNamedQuery("author_find_all", Author.class);
+            return query.getResultList();
         } finally {
             em.close();
         }

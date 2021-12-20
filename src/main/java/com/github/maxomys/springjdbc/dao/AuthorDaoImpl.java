@@ -57,6 +57,11 @@ public class AuthorDaoImpl implements AuthorDao {
     }
 
     @Override
+    public List<Author> findAllAuthors() {
+        return null;
+    }
+
+    @Override
     public Author saveNewAuthor(Author author) {
         try (Connection connection = source.getConnection();
              PreparedStatement statement = connection.prepareStatement("INSERT INTO author (first_name, last_name) VALUES (?, ?)")) {

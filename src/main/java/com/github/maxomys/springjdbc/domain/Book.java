@@ -5,6 +5,7 @@ import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
+@NamedQuery(name = "find_all_books", query = "FROM Book")
 public class Book {
 
     @Id
